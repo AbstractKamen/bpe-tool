@@ -1,9 +1,9 @@
-package com.abstractkamen.bpe;
+package com.abstractkamen.bpe.structures;
 
 public class BytePair {
 
-  private int left;
-  private int right;
+  private final int left;
+  private final int right;
 
   public BytePair(int left, int right) {
     this.left = left;

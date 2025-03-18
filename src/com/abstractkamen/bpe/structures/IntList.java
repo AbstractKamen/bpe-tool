@@ -1,14 +1,12 @@
-package com.abstractkamen.bpe;
-
-import com.abstractkamen.array.ArraySupport;
+package com.abstractkamen.bpe.structures;
 
 import java.util.Arrays;
 
-public class Tokens {
+public class IntList {
   private int[] tokens;
   private int size;
 
-  public Tokens() {
+  public IntList() {
     this.tokens = new int[16];
   }
 

@@ -1,4 +1,4 @@
-package com.abstractkamen.array;
+package com.abstractkamen.bpe.structures;
 
 public class ArraySupport {
 
