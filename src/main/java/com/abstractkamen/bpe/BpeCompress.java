@@ -17,6 +17,10 @@ public class BpeCompress {
   private IntList compressedTokens;
 
 
+  public BpeCompress() {
+    this(EMPTY_VISITOR);
+  }
+
   public BpeCompress(BpeIterationVisitor visitor) {
     this.visitor = visitor;
     this.frequencies = new HashMap<>();
@@ -25,7 +29,7 @@ public class BpeCompress {
 
   public void compressTokens(IntList tokensIn, int maxIterations) {
 
-    IntList tokensOut = null;
+    IntList tokensOut = tokensIn;
     int i = 1;
     while (true) {
       if (maxIterations == 0) break;
@@ -51,10 +55,12 @@ public class BpeCompress {
       maxIterations--;
       i++;
     }
-    System.out.println("pairs");
-    for (BytePair pair : pairs) {
-      System.out.println(pair);
-    }
+
+    this.compressedTokens = tokensOut;
+  }
+
+  public IntList getCompressedTokens() {
+    return compressedTokens;
   }
 
   public Map<BytePair, Integer> getFrequencies() {
@@ -66,13 +72,13 @@ public class BpeCompress {
   }
 
   private static IntList replaceMaxPairToken(IntList tokensIn, IntList tokensOut, BytePair maxPair, int maxTokenIndex) {
-    if (tokensOut == null) {
+    if (tokensOut == null || tokensOut == tokensIn) {
       tokensOut = new IntList();
     } else {
       tokensOut.clear();
     }
     int token, prevToken = -1;
-    for (int i = 0; i < tokensIn.size() - 1; ++i) {
+    for (int i = 0; i < tokensIn.size(); ++i) {
       token = tokensIn.get(i);
       if (prevToken != -1) {
         if (maxPair.matches(prevToken, token)) {
@@ -115,4 +121,13 @@ public class BpeCompress {
     }
     return asciiPairs;
   }
+
+  // @formatter:off
+  public static final BpeIterationVisitor EMPTY_VISITOR = new BpeIterationVisitor() {
+    public void visitIterationStart(int iteration, IntList tokensIn, List<BytePair> pairs, Map<BytePair, Integer> frequencies) {}
+    public void visitPairFrequenciesFound(int iteration, IntList tokensIn, List<BytePair> pairs, Map<BytePair, Integer> frequencies, BytePair maxPair, Integer maxFrequency) {}
+    public void visitMaxCompressionAchieved(int iteration, IntList tokensIn, List<BytePair> pairs, Map<BytePair, Integer> frequencies) {}
+    public void visitIterationEnd(int iteration, IntList tokensIn, IntList tokensOut, List<BytePair> pairs, Map<BytePair, Integer> frequencies) {}
+  };
+  // @formatter:on
 }

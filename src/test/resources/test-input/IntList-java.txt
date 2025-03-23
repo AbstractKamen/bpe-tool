@@ -1,6 +1,7 @@
 package com.abstractkamen.bpe.structures;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class IntList {
   private int[] tokens;
@@ -34,6 +35,15 @@ public class IntList {
 
   @Override
   public String toString() {
+
+    final StringJoiner sj = new StringJoiner(", ", "[", "]");
+    for (int i = 0; i < size; ++i) {
+      sj.add(tokens[i] + "");
+    }
+    return String.format("IntList.size{%d} %s", size, sj);
+  }
+
+  public String toActualString() {
     final StringBuilder sb = new StringBuilder();
     for (int i = 0; i < this.size; ++i) {
       sb.append((char) this.tokens[i]);

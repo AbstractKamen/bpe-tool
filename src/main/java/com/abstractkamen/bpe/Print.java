@@ -10,6 +10,11 @@ public class Print {
   private static final String[] SIZE_UNITS = {"B", "KB", "MB", "GB"};
 
   public static void showTokens(List<BytePair> pairs, IntList tokens) {
+    final String s = convertTokensToString_highlightReplaced(pairs, tokens);
+    System.out.println(s);
+  }
+
+  private static String convertTokensToString_highlightReplaced(List<BytePair> pairs, IntList tokens) {
     final var sb = new StringBuilder();
 
     for (int i = 0, token; i < tokens.size(); ++i) {
@@ -21,7 +26,7 @@ public class Print {
         sb.append(String.format("[%d]", token));
       }
     }
-    System.out.println(sb);
+    return sb.toString();
   }
 
   public static String humanReadableSize(double size) {
