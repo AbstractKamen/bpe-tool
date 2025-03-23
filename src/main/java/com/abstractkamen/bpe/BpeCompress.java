@@ -27,6 +27,7 @@ public class BpeCompress {
     this.pairs = initPairsAscii();
   }
 
+
   public void compressTokens(IntList tokensIn, int maxIterations) {
 
     IntList tokensOut = tokensIn;
