@@ -18,7 +18,7 @@ public class BpeCompress {
 
 
   public BpeCompress() {
-    this(EMPTY_VISITOR);
+    this(BpeIterationVisitor.EMPTY_VISITOR);
   }
 
   public BpeCompress(BpeIterationVisitor visitor) {
@@ -121,13 +121,4 @@ public class BpeCompress {
     }
     return asciiPairs;
   }
-
-  // @formatter:off
-  public static final BpeIterationVisitor EMPTY_VISITOR = new BpeIterationVisitor() {
-    public void visitIterationStart(int iteration, IntList tokensIn, List<BytePair> pairs, Map<BytePair, Integer> frequencies) {}
-    public void visitPairFrequenciesFound(int iteration, IntList tokensIn, List<BytePair> pairs, Map<BytePair, Integer> frequencies, BytePair maxPair, Integer maxFrequency) {}
-    public void visitMaxCompressionAchieved(int iteration, IntList tokensIn, List<BytePair> pairs, Map<BytePair, Integer> frequencies) {}
-    public void visitIterationEnd(int iteration, IntList tokensIn, IntList tokensOut, List<BytePair> pairs, Map<BytePair, Integer> frequencies) {}
-  };
-  // @formatter:on
 }

@@ -12,7 +12,7 @@ public class BpeDecompress {
   private IntList decompressedTokens;
 
   public BpeDecompress() {
-    this(BpeCompress.EMPTY_VISITOR);
+    this(BpeIterationVisitor.EMPTY_VISITOR);
   }
 
   public BpeDecompress(BpeIterationVisitor visitor) {this.visitor = visitor;}
