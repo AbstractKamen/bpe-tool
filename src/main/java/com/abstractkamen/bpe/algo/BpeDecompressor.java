@@ -1,4 +1,4 @@
-package com.abstractkamen.bpe;
+package com.abstractkamen.bpe.algo;
 
 import com.abstractkamen.bpe.structures.BytePair;
 import com.abstractkamen.bpe.structures.IntList;
@@ -6,16 +6,16 @@ import com.abstractkamen.bpe.visitor.BpeIterationVisitor;
 
 import java.util.List;
 
-public class BpeDecompress {
+public class BpeDecompressor {
 
   private final BpeIterationVisitor visitor;
   private IntList decompressedTokens;
 
-  public BpeDecompress() {
+  public BpeDecompressor() {
     this(BpeIterationVisitor.EMPTY_VISITOR);
   }
 
-  public BpeDecompress(BpeIterationVisitor visitor) {this.visitor = visitor;}
+  public BpeDecompressor(BpeIterationVisitor visitor) {this.visitor = visitor;}
 
   public void decompressTokens(IntList tokensIn, List<BytePair> pairs) {
     this.decompressedTokens = tokensIn;

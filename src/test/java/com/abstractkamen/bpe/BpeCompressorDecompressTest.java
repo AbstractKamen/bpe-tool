@@ -1,5 +1,7 @@
 package com.abstractkamen.bpe;
 
+import com.abstractkamen.bpe.algo.BpeCompressor;
+import com.abstractkamen.bpe.algo.BpeDecompressor;
 import com.abstractkamen.bpe.structures.BytePair;
 import com.abstractkamen.bpe.structures.IntList;
 import org.junit.Assert;
@@ -13,10 +15,10 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.abstractkamen.bpe.Main.getInitialTokens;
+import static com.abstractkamen.bpe.commands.BpeCompressCommand.getInitialTokens;
 
 @RunWith(Parameterized.class)
-public class BpeCompressDecompressTest {
+public class BpeCompressorDecompressTest {
 
   private String inputTestFile;
   private int maxIterations;
@@ -24,7 +26,7 @@ public class BpeCompressDecompressTest {
   private IntList tokensIn;
   private String expectedText;
 
-  public BpeCompressDecompressTest(String inputTestFile, int maxIterations) throws IOException {
+  public BpeCompressorDecompressTest(String inputTestFile, int maxIterations) throws IOException {
     this.inputTestFile = inputTestFile;
     this.maxIterations = maxIterations;
 
@@ -37,13 +39,13 @@ public class BpeCompressDecompressTest {
   @Parameters(name = "{index}: file:{0}, iterations:{1}")
   public static Iterable<Object[]> data() {
     return Arrays.asList(
-      new Object[]{"test-input/bpe-wiki-page.txt", 1}, new Object[]{"test-input/IntList-java.txt", 1},
-      new Object[]{"test-input/bpe-wiki-page.txt", 2}, new Object[]{"test-input/IntList-java.txt", 2},
-      new Object[]{"test-input/bpe-wiki-page.txt", 5}, new Object[]{"test-input/IntList-java.txt", 3},
-      new Object[]{"test-input/bpe-wiki-page.txt", 25}, new Object[]{"test-input/IntList-java.txt", 5},
-      new Object[]{"test-input/bpe-wiki-page.txt", 50}, new Object[]{"test-input/IntList-java.txt", 20},
-      new Object[]{"test-input/bpe-wiki-page.txt", 75}, new Object[]{"test-input/IntList-java.txt", 25},
-      new Object[]{"test-input/bpe-wiki-page.txt", 100}, new Object[]{"test-input/IntList-java.txt", 30}
+      new Object[]{"test-io/bpe-wiki-page.txt", 1}, new Object[]{"test-io/IntList-java.txt", 1},
+      new Object[]{"test-io/bpe-wiki-page.txt", 2}, new Object[]{"test-io/IntList-java.txt", 2},
+      new Object[]{"test-io/bpe-wiki-page.txt", 5}, new Object[]{"test-io/IntList-java.txt", 3},
+      new Object[]{"test-io/bpe-wiki-page.txt", 25}, new Object[]{"test-io/IntList-java.txt", 5},
+      new Object[]{"test-io/bpe-wiki-page.txt", 50}, new Object[]{"test-io/IntList-java.txt", 20},
+      new Object[]{"test-io/bpe-wiki-page.txt", 75}, new Object[]{"test-io/IntList-java.txt", 25},
+      new Object[]{"test-io/bpe-wiki-page.txt", 100}, new Object[]{"test-io/IntList-java.txt", 30}
     );
   }
 
@@ -52,17 +54,17 @@ public class BpeCompressDecompressTest {
     // arrange
 
     // act
-    final BpeCompress bpeCompress = new BpeCompress();
+    final BpeCompressor bpeCompressor = new BpeCompressor();
     
-    bpeCompress.compressTokens(tokensIn, maxIterations);
+    bpeCompressor.compressTokens(tokensIn, maxIterations);
 
-    final List<BytePair> pairs = bpeCompress.getPairs();
-    final IntList compressedTokens = bpeCompress.getCompressedTokens();
-    final BpeDecompress bpeDecompress = new BpeDecompress();
+    final List<BytePair> pairs = bpeCompressor.getPairs();
+    final IntList compressedTokens = bpeCompressor.getCompressedTokens();
+    final BpeDecompressor bpeDecompressor = new BpeDecompressor();
     final String compressedTokensActualString = compressedTokens.toActualString();
     // assert
-    bpeDecompress.decompressTokens(compressedTokens, pairs);
-    final IntList decompressedTokens = bpeDecompress.getDecompressedTokens();
+    bpeDecompressor.decompressTokens(compressedTokens, pairs);
+    final IntList decompressedTokens = bpeDecompressor.getDecompressedTokens();
     final String decompressedText = decompressedTokens.toActualString();
     Assert.assertTrue(expectedText.length() >= compressedTokensActualString.length());
     Assert.assertEquals(expectedText, decompressedText);
