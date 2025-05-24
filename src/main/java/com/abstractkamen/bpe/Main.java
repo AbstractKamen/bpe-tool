@@ -44,7 +44,7 @@ public class Main {
                         int maxIterations = Integer.parseInt(args[i + 1]);
                         flags.put("maxIteration", maxIterations);
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.printf("Compress file%n    bpec -i [maxIterations is expected] -in <input file path> -out <output file path>%n", args[i + 1]);
+                        System.out.printf("Compress file%n    bpec -i [maxIterations is expected] -in <input file path> -out <output file path>%n");
                     } catch (NumberFormatException e) {
                         System.out.printf("Compress file%n    bpec -i [%s is not a valid number] -in <input file path> -out <output file path>%n", args[i + 1]);
                     }
