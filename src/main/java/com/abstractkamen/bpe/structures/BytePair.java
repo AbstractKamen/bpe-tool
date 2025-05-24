@@ -12,6 +12,10 @@ public class BytePair {
 
   @Override
   public int hashCode() {
+    return getBPHashCode(left, right);
+  }
+
+  public static int getBPHashCode(int left, int right) {
     return 31 * left + 17 * right;
   }
 
