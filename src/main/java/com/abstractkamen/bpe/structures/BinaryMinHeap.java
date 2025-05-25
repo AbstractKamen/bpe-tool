@@ -12,7 +12,7 @@ public class BinaryMinHeap<T> {
   protected static final int DEFAULT_CAPACITY = 16;
   private final Comparator<T> comparator;
   private Object[] items;
-  private final Map<T, Integer> indexByT = new HashMap<>(DEFAULT_CAPACITY);
+  private final Map<T, Integer> indexByT;
   private int size;
 
   /**
@@ -29,6 +29,7 @@ public class BinaryMinHeap<T> {
     }
     this.comparator = comparator;
     this.items = new Object[capacity];
+    this.indexByT = new HashMap<>(capacity);
   }
 
   /**
@@ -83,7 +84,8 @@ public class BinaryMinHeap<T> {
   public int push(T item) {
     final int i = size;
     if (items.length <= i + 1) {
-      items = Arrays.copyOf(items, items.length << 1);
+      final int newLength = ArraySupport.newLength(items.length, 16, items.length >> 1);
+      items = Arrays.copyOf(items, newLength);
     }
     items[i] = item;
     indexByT.putIfAbsent(item, i);

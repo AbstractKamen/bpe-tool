@@ -16,7 +16,7 @@ public class BPFreq {
   }
 
   public BPFreq decrement() {
-    frequency = Math.max(0, frequency - 1);
+    frequency--;
     return this;
   }
 

@@ -2,8 +2,8 @@ package com.abstractkamen.bpe.structures;
 
 public class BytePair {
 
-  private final int left;
-  private final int right;
+  public final int left;
+  public final int right;
 
   public BytePair(int left, int right) {
     this.left = left;
@@ -17,18 +17,6 @@ public class BytePair {
 
   public static int getBPHashCode(int left, int right) {
     return 31 * left + 17 * right;
-  }
-
-  public boolean matches(int left, int right) {
-    return this.left == left && this.right == right;
-  }
-
-  public int left() {
-    return left;
-  }
-
-  public int right() {
-    return right;
   }
 
   @Override

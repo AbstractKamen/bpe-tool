@@ -33,7 +33,7 @@ public abstract class BpeCompressorAbstract {
     for (int i = 0; i < tokensIn.size(); ++i) {
       token = tokensIn.get(i);
       if (prevToken != -1) {
-        if (maxPair.matches(prevToken, token)) {
+        if (maxPair.left == prevToken && maxPair.right == token) {
           tokensOut.add(maxTokenIndex);
           if (i + 1 < tokensIn.size()) {
             nextToken = tokensIn.get(++i);

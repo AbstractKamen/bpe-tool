@@ -19,7 +19,7 @@ public class Print {
 
     for (int i = 0, token; i < tokens.size(); ++i) {
       token = tokens.get(i);
-      if (token < pairs.size() && pairs.get(token).left() == token) {
+      if (token < pairs.size() && pairs.get(token).left == token) {
         sb.append((char) token);
       } else {
         sb.append(String.format("[%d]", token));

@@ -2,7 +2,6 @@ package com.abstractkamen.bpe.algo;
 
 import com.abstractkamen.bpe.structures.BytePair;
 import com.abstractkamen.bpe.structures.IntList;
-import com.abstractkamen.bpe.visitor.BpeCompressionVisitor;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class BpeDecompressor {
     IntList tokensOut = tokensIn;
     BytePair maxPair;
     int maxPairIndex = pairs.size() - 1;
-    while (maxPairIndex > 0 && (maxPair = pairs.get(maxPairIndex)).right() > -1) {
+    while (maxPairIndex > 0 && (maxPair = pairs.get(maxPairIndex)).right > -1) {
       this.decompressedTokens = replaceMaxPairToken(tokensIn, tokensOut, maxPair, maxPairIndex--);
       IntList temp = tokensIn;
       tokensOut = decompressedTokens;
@@ -33,8 +32,8 @@ public class BpeDecompressor {
     for (int i = 0; i < tokensIn.size(); ++i) {
       int token = tokensIn.get(i);
       if (token == maxPairIndex) {
-        tokensOut.add(maxPair.left());
-        tokensOut.add(maxPair.right());
+        tokensOut.add(maxPair.left);
+        tokensOut.add(maxPair.right);
       } else {
         tokensOut.add(token);
       }
