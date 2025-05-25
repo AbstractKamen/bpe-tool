@@ -7,8 +7,11 @@ public class IntList {
   private int[] tokens;
   private int size;
 
+  public IntList(int size) {
+    this.tokens = new int[size];
+  }
   public IntList() {
-    this.tokens = new int[16];
+    this(16);
   }
 
   public void add(int token) {

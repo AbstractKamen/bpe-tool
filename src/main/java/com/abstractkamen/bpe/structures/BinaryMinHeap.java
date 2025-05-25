@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.UnaryOperator;
 
-public class CoolerMinBinaryHeap<T> {
+public class BinaryMinHeap<T> {
 
   protected static final int DEFAULT_CAPACITY = 16;
   private final Comparator<T> comparator;
@@ -16,14 +16,14 @@ public class CoolerMinBinaryHeap<T> {
   private int size;
 
   /**
-   * Create an {@code CoolerMinBinaryHeap<T>} with a custom comparator and capacity.
+   * Create an {@code BinaryMinHeap<T>} with a custom comparator and capacity.
    *
    * @param comparator
    *   custom comparator
    * @param capacity
    *   initial capacity
    */
-  public CoolerMinBinaryHeap(Comparator<T> comparator, int capacity) {
+  public BinaryMinHeap(Comparator<T> comparator, int capacity) {
     if (capacity < 1) {
       throw new IllegalArgumentException("capacity cannot be below 1");
     }
@@ -32,37 +32,37 @@ public class CoolerMinBinaryHeap<T> {
   }
 
   /**
-   * Create an {@code CoolerMinBinaryHeap<T>} with a custom comparator.
+   * Create an {@code BinaryMinHeap<T>} with a custom comparator.
    *
    * @param comparator
    *   custom comparator
    */
-  public CoolerMinBinaryHeap(Comparator<T> comparator) {
+  public BinaryMinHeap(Comparator<T> comparator) {
     this(comparator, DEFAULT_CAPACITY);
   }
 
   /**
-   * Create an {@code CoolerMinBinaryHeap<T>} with natural order comparator in a type safe way.
+   * Create an {@code BinaryMinHeap<T>} with natural order comparator in a type safe way.
    *
    * @param <T>
    *   comparable type
    */
-  public static <T extends Comparable<T>> CoolerMinBinaryHeap<T> createComparable() {
+  public static <T extends Comparable<T>> BinaryMinHeap<T> createComparable() {
     final Comparator<T> c = Comparable::compareTo;
-    return new CoolerMinBinaryHeap<>(c);
+    return new BinaryMinHeap<>(c);
   }
 
   /**
-   * Create an {@code CoolerMinBinaryHeap<T>} with natural order comparator in a type safe way.
+   * Create an {@code BinaryMinHeap<T>} with natural order comparator in a type safe way.
    *
    * @param capacity
    *   initial capacity
    * @param <T>
    *   comparable type
    */
-  public static <T extends Comparable<T>> CoolerMinBinaryHeap<T> createComparable(int capacity) {
+  public static <T extends Comparable<T>> BinaryMinHeap<T> createComparable(int capacity) {
     final Comparator<T> c = Comparable::compareTo;
-    return new CoolerMinBinaryHeap<>(c, capacity);
+    return new BinaryMinHeap<>(c, capacity);
   }
 
   public int size() {

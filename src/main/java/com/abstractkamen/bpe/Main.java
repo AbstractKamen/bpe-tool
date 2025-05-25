@@ -89,7 +89,7 @@ public class Main {
     }
 
     private static void help() {
-        System.out.printf("Compress file%n    bpec -i [maxIterations] -debug <input file path> <output file path>%nDecompress file%n    bped <input file path> <output file path>%n");
+        System.out.printf("Compress file%n    bpec -i [maxIterations] -debug -in <input file path> -out <output file path>%nDecompress file%n    bped <input file path> <output file path>%n");
     }
 
 }

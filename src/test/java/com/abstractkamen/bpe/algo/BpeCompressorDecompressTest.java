@@ -1,9 +1,9 @@
-package com.abstractkamen.bpe;
+package com.abstractkamen.bpe.algo;
 
-import com.abstractkamen.bpe.algo.BpeCompressor;
-import com.abstractkamen.bpe.algo.BpeDecompressor;
 import com.abstractkamen.bpe.structures.BytePair;
+import com.abstractkamen.bpe.structures.CompressionResult;
 import com.abstractkamen.bpe.structures.IntList;
+import com.abstractkamen.bpe.visitor.StdLoggingBpeCompressionVisitor;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,12 +54,12 @@ public class BpeCompressorDecompressTest {
     // arrange
 
     // act
-    final BpeCompressor bpeCompressor = new BpeCompressor();
-    
-    bpeCompressor.compressTokens(tokensIn, maxIterations);
+    final BpeVisitedCompressor bpeCompressor = new BpeVisitedCompressor(new StdLoggingBpeCompressionVisitor());
 
-    final List<BytePair> pairs = bpeCompressor.getPairs();
-    final IntList compressedTokens = bpeCompressor.getCompressedTokens();
+    final CompressionResult compressionResult = bpeCompressor.compressTokens(tokensIn, maxIterations);
+
+    final List<BytePair> pairs = compressionResult.pairs();
+    final IntList compressedTokens = compressionResult.compressedTokens();
     final BpeDecompressor bpeDecompressor = new BpeDecompressor();
     final String compressedTokensActualString = compressedTokens.toActualString();
     // assert

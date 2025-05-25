@@ -1,10 +1,12 @@
 package com.abstractkamen.bpe.commands;
 
 import com.abstractkamen.bpe.algo.BpeCompressor;
+import com.abstractkamen.bpe.algo.BpeVisitedCompressor;
+import com.abstractkamen.bpe.algo.StdBpeCompressor;
 import com.abstractkamen.bpe.structures.BytePairs;
+import com.abstractkamen.bpe.structures.CompressionResult;
 import com.abstractkamen.bpe.structures.IntList;
-import com.abstractkamen.bpe.visitor.BpeIterationVisitor;
-import com.abstractkamen.bpe.visitor.BpeStdLoggingVisitor;
+import com.abstractkamen.bpe.visitor.StdLoggingBpeCompressionVisitor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,16 +35,16 @@ public class BpeCompressCommand implements Command {
         final int maxIterations = (int) flags.getOrDefault("maxIteration", Integer.MAX_VALUE);
         final String charSet = (String) flags.getOrDefault("charset", StandardCharsets.UTF_8.name());
 
-        BpeIterationVisitor visitor = BpeIterationVisitor.EMPTY_VISITOR;
+        final BpeCompressor bpeCompressor;
         if (debug) {
-            visitor = new BpeStdLoggingVisitor();
+            bpeCompressor = new BpeVisitedCompressor(new StdLoggingBpeCompressionVisitor(), charSet);
+        } else {
+            bpeCompressor = new StdBpeCompressor(charSet);
         }
+        final CompressionResult compressionResult = bpeCompressor.compressTokens(initialTokens, maxIterations);
 
-        final BpeCompressor bpeCompressor = new BpeCompressor(visitor, charSet);
-        bpeCompressor.compressTokens(initialTokens, maxIterations);
-
-        final IntList compressedTokens = bpeCompressor.getCompressedTokens();
-        final BytePairs pairs = bpeCompressor.getPairs();
+        final IntList compressedTokens = compressionResult.compressedTokens();
+        final BytePairs pairs = compressionResult.pairs();
         final Charset pairsCharset = pairs.getCharset();
         out.write(pairsCharset.name().getBytes());
         out.write(BpeConstants.BPE_CHARSET_DELIMITER.getBytes());

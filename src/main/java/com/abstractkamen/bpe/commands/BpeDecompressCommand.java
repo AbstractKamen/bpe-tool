@@ -101,7 +101,7 @@ public class BpeDecompressCommand implements Command {
                     break;
                 } else {
                     // delimiter doesn't match buffer
-                    System.out.println("buffer mismatch " + Arrays.toString(pairsDelBuf));
+                    // System.out.println("buffer mismatch " + Arrays.toString(pairsDelBuf));
                     // add all buffer tokensIn as pairs
 
                     // if prev has a value use it as left-most

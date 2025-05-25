@@ -8,7 +8,7 @@ import com.abstractkamen.bpe.structures.IntList;
 import java.util.List;
 import java.util.Map;
 
-public class BpeStdLoggingVisitor implements BpeIterationVisitor {
+public class StdLoggingBpeCompressionVisitor implements BpeCompressionVisitor {
 
   @Override
   public void visitIterationStart(int iteration, IntList tokensIn, List<BytePair> pairs, Map<Integer, BPFreq> frequencies) {
