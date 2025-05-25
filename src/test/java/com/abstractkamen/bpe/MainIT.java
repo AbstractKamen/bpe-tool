@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.abstractkamen.bpe.commands.BpeCompressCommand.getInitialTokens;
 import static org.junit.Assert.assertEquals;
@@ -30,7 +29,6 @@ public class MainIT {
   private int maxIterations;
 
   private IntList tokensIn;
-  private String expectedText;
   private String testDirPath;
   private static final String TEST_OUTPUT_COMPRESSED_PATH_PREFIX = "compressed-";
   private static final String TEST_OUTPUT_DECOMPRESSED_PATH_PREFIX = "decompressed-";
@@ -46,7 +44,6 @@ public class MainIT {
 
     try (final InputStream resourceAsStream = resource.openStream()) {
       this.tokensIn = getInitialTokens(resourceAsStream);
-      this.expectedText = tokensIn.toActualString();
     }
   }
 
@@ -84,10 +81,16 @@ public class MainIT {
       p += Math.max(1, (int) Math.pow(Math.E, ((double) i) / maxIterations3));
       params.add(new Object[]{"test-io/IntList-java.txt", i});
     }
+    // case 4
+    final int maxIterations4 = 500;
+    for (int i = 1; i < maxIterations4; i += p) {
+      p += Math.max(1, (int) Math.pow(Math.E, ((double) i) / maxIterations4));
+      params.add(new Object[]{"test-io/labeled_data-from-hate-speech-and-offensive-language.csv", i});
+    }
     return params;
   }
 
-  @Test(timeout = 2000)
+  @Test(timeout = 10000)
   public void compressingThenDecompressingText_shouldProduceSameText_asInput_andCompressedText_shouldBeLesserThanOrEqualTo_inputTextSize() throws IOException {
     // arrange
     // act
@@ -97,23 +100,25 @@ public class MainIT {
       "-out", compressedInputTestFile,
       "-i", maxIterations + "",
       "-charset", "utf8"
-//      ,
-//      "-debug",
+      //      ,
+      //      "-debug",
     });
     Main.main(new String[]{
       "bped",
       "-in", compressedInputTestFile,
       "-out", decompressedInputTestFile,
       "-i", maxIterations + ""
-//      ,
-//      "-debug",
+      //      ,
+      //      "-debug",
 
     });
     // assert
-    final String actual = Files.lines(Paths.get(decompressedInputTestFile)).collect(Collectors.joining("\n"));
-    final String actualCompressed = Files.lines(Paths.get(compressedInputTestFile)).collect(Collectors.joining("\n"));
-    System.out.printf("At %d iterations%nOriginal text chars: %d%nActual  text chars: %d%n", maxIterations, expectedText.length(), actualCompressed.length());
-    assertEquals(expectedText, actual);
+    final IntList compressedTokens = getInitialTokens(Files.newInputStream(Paths.get(compressedInputTestFile)));
+    final IntList decompressedTokens = getInitialTokens(Files.newInputStream(Paths.get(decompressedInputTestFile)));
+    final String actual = decompressedTokens.toActualString();
+    final String expected = tokensIn.toActualString();
+    System.out.printf("At %d iterations%nOriginal text chars: %d%nActual  text chars: %d%n", maxIterations, tokensIn.size(), compressedTokens.size());
+    assertEquals(expected, actual);
 
   }
 
