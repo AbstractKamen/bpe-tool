@@ -5,6 +5,7 @@ A tool which can compress text using binary pair encoding.
 # References 
 - https://www.twitch.tv/tsoding inspirational programmer :D
 - https://en.wikipedia.org/wiki/Byte_pair_encoding
+- https://github.com/t-davidson/hate-speech-and-offensive-language test data :D
 
 # TODO
 
