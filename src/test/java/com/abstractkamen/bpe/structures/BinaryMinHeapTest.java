@@ -27,7 +27,8 @@ public class BinaryMinHeapTest {
     h.push(1);
     h.push(5);
     h.decreaseKey(5, k -> Integer.MIN_VALUE);
-    int prev = Integer.MIN_VALUE;
+    int prev;
+    assertEquals(Integer.MIN_VALUE, prev = h.pop());
     while (!h.isEmpty()) {
       final int min = h.pop();
       System.out.println(min);
@@ -49,13 +50,16 @@ public class BinaryMinHeapTest {
     h.push(17);
     h.push(1);
     h.push(Integer.MIN_VALUE);
+    int prev;
     h.increaseKey(Integer.MIN_VALUE, k -> 5);
-    int prev = Integer.MIN_VALUE;
+    assertEquals("Expected first popped element to be '1'",1, prev = h.pop());
+    h.increaseKey(3, x -> Integer.MAX_VALUE);
     while (!h.isEmpty()) {
       final int min = h.pop();
       assertTrue(min >= prev);
       prev = min;
     }
+    assertEquals("Expected last popped element to be 'Integer.MAX_VALUE'",Integer.MAX_VALUE, prev);
   }
 
   @Test

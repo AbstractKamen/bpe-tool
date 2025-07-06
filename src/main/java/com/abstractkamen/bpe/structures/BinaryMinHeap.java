@@ -119,9 +119,9 @@ public class BinaryMinHeap<T> {
     int i = indexByT.getOrDefault(key, -1);
     if (i >= 0) {
       indexByT.remove(key);
-      key = increment.apply(key);
+      items[i] = key = increment.apply(key);
       indexByT.put(key, i);
-      heapifyUp(items, comparator, i, indexByT);
+      heapifyDown(items, comparator, i, size, indexByT);
     }
   }
 
@@ -129,9 +129,9 @@ public class BinaryMinHeap<T> {
     int i = indexByT.getOrDefault(key, -1);
     if (i >= 0) {
       indexByT.remove(key);
-      key = decrement.apply(key);
+      items[i] = key = decrement.apply(key);
       indexByT.put(key, i);
-      heapifyDown(items, comparator, i, size, indexByT);
+      heapifyUp(items, comparator, i, indexByT);
     }
   }
 
